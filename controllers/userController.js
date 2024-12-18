@@ -34,11 +34,10 @@ exports.loginUser = async (req, res) => {
         .status(400)
         .json({ success: false, message: "Invalid credentials" });
 
-    // JWT oluşturma
     const token = jwt.sign(
-      { id: user._id, email: user.email }, // Payload
-      process.env.JWT_SECRET, // Secret Key .env'den çekiliyor
-      { expiresIn: "1h" } // Token süresi
+      { id: user._id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" } 
     );
 
     res.status(200).json({ success: true, token });
