@@ -12,7 +12,7 @@ const Profile = ({ token }) => {
     const fetchUserProfile = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/users/profile",
+          "http://localhost:8000/api/users/:id",
           {
             headers: {
               Authorization: `Bearer ${token}`,

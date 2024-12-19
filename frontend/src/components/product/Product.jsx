@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Grid from "@mui/material/Grid2";
 import {
-  Grid,
   Card,
   CardContent,
   CardMedia,
@@ -21,11 +21,12 @@ const Product = ({ token }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const { data } = await axios.get("http://localhost:8000/api/products");
-        setProducts(data);
-        setFilteredProducts(data);
+        const response = await axios.get("http://localhost:8000/api/products");
+        console.log(response.data); // Gelen yanıtı kontrol edin
+        setProducts(response.data.data); // data içindeki diziye erişiyoruz
+        setFilteredProducts(response.data.data);
         const uniqueCategories = [
-          ...new Set(data.map((product) => product.category)),
+          ...new Set(response.data.data.map((product) => product.category)),
         ];
         setCategories(uniqueCategories);
       } catch (error) {
@@ -55,7 +56,7 @@ const Product = ({ token }) => {
   };
 
   return (
-    <div>
+    <div className="product">
       <div className="product-filter">
         <TextField
           label="Search Products"
@@ -83,12 +84,12 @@ const Product = ({ token }) => {
         {filteredProducts.map((product) => (
           <Grid item key={product.id} xs={12} sm={6} md={4}>
             <Card>
-              <CardMedia
+              {/* <CardMedia
                 component="img"
                 height="140"
                 image={product.image}
                 alt={product.name}
-              />
+              /> */}
               <CardContent>
                 <Typography variant="h6">{product.name}</Typography>
                 <Typography variant="body2">{product.description}</Typography>

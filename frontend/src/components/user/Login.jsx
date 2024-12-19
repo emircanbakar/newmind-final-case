@@ -4,9 +4,9 @@ import axios from "axios";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 
-const Login = ({ onLogin, setActiveModal }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const Login = ({ onLogin }) => {
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {

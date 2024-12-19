@@ -4,7 +4,7 @@ import axios from "axios";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 
-const Register = ({ onRegister, setActiveModal }) => {
+const Register = ({ onRegister }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

@@ -11,7 +11,7 @@ const billingRoutes = require("./routes/billingRoutes");
 const cors = require("cors");
 app.use(
   cors({
-    origin: "http://localhost:5173", // Vite frontend'in çalıştığı port
+    origin: "http://localhost:3000", // Vite frontend'in çalıştığı port
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"], // Gerekli başlıkları ekleyebilirsiniz
   })
@@ -32,5 +32,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(8000, () => {
-  console.log(`Server running on port 3000`);
+  console.log(`Server running on port 8000`);
 });

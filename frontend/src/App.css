@@ -1,3 +1,8 @@
+.product{
+  margin: 0 auto;
+  padding: 2rem;
+}
+
 .product-filter {
   display: flex;
   flex-direction: row;
@@ -5,7 +10,6 @@
   align-items: center;
   gap: 1rem;
   margin-bottom: 1.5rem;
-  margin-left: 1rem;
   max-width: 800px;
 }
 
