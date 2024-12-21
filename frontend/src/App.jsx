@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { BrowserRouter as Router, Link, Routes, Route } from "react-router-dom";
 import { Modal, Box, Button, Typography } from "@mui/material";
-import "./App.css"
+import "./App.css";
 import Register from "./components/user/Register";
 import Login from "./components/user/Login";
 import Profile from "./components/user/Profile";
 import Products from "./components/product/Product";
+import ProductAdd from "./components/product/ProductAdd";
+import ProductDetails from "./components/product/ProductDetails";
 // import Cart from "./components/Cart"; // Sepet sayfası
 
 const App = () => {
@@ -58,6 +60,9 @@ const App = () => {
                 <Button variant="outlined" style={{ marginLeft: "10px" }}>
                   <Link to="/cart">Cart</Link>
                 </Button>
+                <Button variant="outlined" style={{ marginLeft: "10px" }}>
+                  <Link to="/add-product">Add Product</Link>
+                </Button>
               </>
             )}
           </div>
@@ -66,6 +71,8 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Products />} />
           <Route path="/profile" element={<Profile token={token} />} />
+          <Route path="/add-product" element={<ProductAdd />} />
+          <Route path="/products/:id" element={<ProductDetails />} />
           {/* <Route path="/cart" element={<Cart />} /> */}
         </Routes>
 

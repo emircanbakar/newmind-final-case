@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid2";
 import {
   Card,
@@ -11,7 +12,7 @@ import {
   MenuItem,
 } from "@mui/material";
 
-const Product = ({ token }) => {
+const Product = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -22,7 +23,6 @@ const Product = ({ token }) => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get("http://localhost:8000/api/products");
-        console.log(response.data); // Gelen yanıtı kontrol edin
         setProducts(response.data.data); // data içindeki diziye erişiyoruz
         setFilteredProducts(response.data.data);
         const uniqueCategories = [
@@ -50,9 +50,14 @@ const Product = ({ token }) => {
   const handleCategoryChange = (e) => {
     const category = e.target.value;
     setSelectedCategory(category);
-    setFilteredProducts(
-      products.filter((product) => product.category === category)
-    );
+
+    if (category === "") {
+      setFilteredProducts(products);
+    } else {
+      setFilteredProducts(
+        products.filter((product) => product.category === category)
+      );
+    }
   };
 
   return (
@@ -64,7 +69,7 @@ const Product = ({ token }) => {
           value={searchTerm}
           onChange={handleSearch}
           fullWidth
-        ></TextField>
+        />
         <TextField
           select
           label="Filter by Category"
@@ -84,12 +89,21 @@ const Product = ({ token }) => {
         {filteredProducts.map((product) => (
           <Grid item key={product.id} xs={12} sm={6} md={4}>
             <Card>
-              {/* <CardMedia
+              <CardMedia
                 component="img"
-                height="140"
-                image={product.image}
                 alt={product.name}
-              /> */}
+                image={`data:image/jpeg;base64,${product.image}`} // Base64 fotoğrafı burada render ediyoruz
+                title={product.name}
+                sx={{
+                  width: "100%", // Genişliği %100 yapıyoruz
+                  height: "auto",
+                  objectFit: "contain",
+                  maxHeight: "200px",
+                  maxWidth: "200px",
+                  padding: "20px",
+                }}
+              />
+
               <CardContent>
                 <Typography variant="h6">{product.name}</Typography>
                 <Typography variant="body2">{product.description}</Typography>
@@ -98,9 +112,10 @@ const Product = ({ token }) => {
                   variant="contained"
                   color="primary"
                   fullWidth
-                  onClick={() => console.log("Add to cart:", product.name)}
+                  component={Link}
+                  to={`/products/${product._id}`}
                 >
-                  Add to Cart
+                  View Details
                 </Button>
               </CardContent>
             </Card>
