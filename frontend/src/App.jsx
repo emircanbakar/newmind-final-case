@@ -8,7 +8,10 @@ import Profile from "./components/user/Profile";
 import Products from "./components/product/Product";
 import ProductAdd from "./components/product/ProductAdd";
 import ProductDetails from "./components/product/ProductDetails";
-// import Cart from "./components/Cart"; // Sepet sayfası
+import Cart from "./components/cart/Cart";
+import { CartProvider } from "./context/CartContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   const [token, setToken] = useState(null);
@@ -31,86 +34,104 @@ const App = () => {
   };
 
   return (
-    <Router>
-      <div>
-        <header className="header">
-          <Link to="/">E-Commerce</Link>
-          <div>
-            {!token ? (
-              <>
-                <Button
-                  variant="outlined"
-                  onClick={() => setOpenRegisterModal(true)}
-                >
-                  Register
-                </Button>
-                <Button
-                  variant="outlined"
-                  onClick={() => setOpenLoginModal(true)}
-                  style={{ marginLeft: "10px" }}
-                >
-                  Login
-                </Button>
-              </>
-            ) : (
-              <>
-                <Button variant="outlined" style={{ marginLeft: "10px" }}>
-                  <Link to="/profile">Profile</Link>
-                </Button>
-                <Button variant="outlined" style={{ marginLeft: "10px" }}>
-                  <Link to="/cart">Cart</Link>
-                </Button>
-                <Button variant="outlined" style={{ marginLeft: "10px" }}>
-                  <Link to="/add-product">Add Product</Link>
-                </Button>
-              </>
-            )}
-          </div>
-        </header>
+    <CartProvider>
+      {" "}
+      {/* App'i CartContext ile sarmalıyoruz */}
+      <Router>
+        <div>
+          <header className="header">
+            <Link to="/">E-Commerce</Link>
+            <div>
+              {!token ? (
+                <>
+                  <Button
+                    variant="outlined"
+                    onClick={() => setOpenRegisterModal(true)}
+                  >
+                    Register
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    onClick={() => setOpenLoginModal(true)}
+                    style={{ marginLeft: "10px" }}
+                  >
+                    Login
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button variant="outlined" style={{ marginLeft: "10px" }}>
+                    <Link to="/profile">
+                      <Typography variant="body1" sx={{ fontSize: "14px" }}>
+                        Add Product
+                      </Typography>
+                    </Link>
+                  </Button>
+                  <Button variant="outlined" style={{ marginLeft: "10px" }}>
+                    <Link to="/cart">
+                      <Typography variant="body1" sx={{ fontSize: "14px" }}>
+                        Cart
+                      </Typography>
+                    </Link>
+                  </Button>
+                  <Button variant="outlined" style={{ marginLeft: "10px" }}>
+                    <Link to="/add-product">
+                      <Typography variant="body1" sx={{ fontSize: "14px" }}>
+                        Profile
+                      </Typography>
+                    </Link>
+                  </Button>
+                </>
+              )}
+            </div>
+          </header>
 
-        <Routes>
-          <Route path="/" element={<Products />} />
-          <Route path="/profile" element={<Profile token={token} />} />
-          <Route path="/add-product" element={<ProductAdd />} />
-          <Route path="/products/:id" element={<ProductDetails />} />
-          {/* <Route path="/cart" element={<Cart />} /> */}
-        </Routes>
+          <Routes>
+            <Route path="/" element={<Products />} />
+            <Route path="/profile" element={<Profile token={token} />} />
+            <Route path="/add-product" element={<ProductAdd />} />
+            <Route path="/products/:id" element={<ProductDetails />} />
+            <Route path="/cart" element={<Cart />} />
+          </Routes>
 
-        <Modal open={openRegisterModal} onClose={handleModalClose}>
-          <Box
-            sx={{
-              maxWidth: 400,
-              margin: "50px auto",
-              background: "#fff",
-              padding: 4,
-              borderRadius: 2,
-            }}
-          >
-            <Typography variant="h6" component="h2" gutterBottom>
-              Register
-            </Typography>
-            <Register onRegister={handleRegister} />
-          </Box>
-        </Modal>
+          <Modal open={openRegisterModal} onClose={handleModalClose}>
+            <Box
+              sx={{
+                maxWidth: 400,
+                margin: "50px auto",
+                background: "#fff",
+                padding: 4,
+                borderRadius: 2,
+              }}
+            >
+              <Typography variant="h6" component="h2" gutterBottom>
+                Register
+              </Typography>
+              <Register onRegister={handleRegister} />
+            </Box>
+          </Modal>
 
-        <Modal open={openLoginModal} onClose={handleModalClose}>
-          <Box
-            sx={{
-              maxWidth: 400,
-              margin: "50px auto",
-              background: "#fff",
-              padding: 4,
-              borderRadius: 2,
-            }}
-          >
-            <Typography variant="h6" component="h2" gutterBottom>
-              Login
-            </Typography>
-            <Login onLogin={handleLogin} />
-          </Box>
-        </Modal>
-      </div>
-    </Router>
+          <Modal open={openLoginModal} onClose={handleModalClose}>
+            <Box
+              sx={{
+                maxWidth: 400,
+                margin: "50px auto",
+                background: "#fff",
+                padding: 4,
+                borderRadius: 2,
+              }}
+            >
+              <Typography variant="h6" component="h2" gutterBottom>
+                Login
+              </Typography>
+              <Login onLogin={handleLogin} />
+            </Box>
+          </Modal>
+
+          <ToastContainer position="top-right" autoClose={3000} />
+        </div>
+      </Router>
+    </CartProvider>
   );
 };
 

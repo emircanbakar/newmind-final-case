@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import { toast } from "react-toastify";
 
 const Register = ({ onRegister }) => {
   const [username, setUsername] = useState("");
@@ -14,19 +15,23 @@ const Register = ({ onRegister }) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:8000/api/users/register", {
-        username,
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "http://localhost:8000/api/users/register",
+        {
+          username,
+          email,
+          password,
+        }
+      );
       onRegister(response.data.token);
+      toast.success("Congrats! your account has been created");
     } catch (err) {
       setError("Invalid information! Please try again.");
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} >
+    <form onSubmit={handleSubmit}>
       <TextField
         label="Username"
         variant="outlined"

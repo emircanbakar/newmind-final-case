@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import { toast } from "react-toastify";
 
 const Login = ({ onLogin }) => {
   const [email, setEmail] = useState();
@@ -21,6 +22,7 @@ const Login = ({ onLogin }) => {
         }
       );
       onLogin(response.data.token);
+      toast.success("welcome back!");
     } catch (err) {
       setError("Invalid credentials! Please try again.");
     }
