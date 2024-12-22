@@ -10,9 +10,10 @@ import {
   Button,
   TextField,
   MenuItem,
+  Box
 } from "@mui/material";
 import { useCart } from "../../context/CartContext";
-import { toast } from "react-toastify"; 
+import { toast } from "react-toastify";
 
 const Product = () => {
   const [products, setProducts] = useState([]);
@@ -106,7 +107,13 @@ const Product = () => {
       <Grid container spacing={4}>
         {filteredProducts.map((product) => (
           <Grid item key={product._id} xs={12} sm={6} md={4}>
-            <Card>
+            <Card
+              sx={{
+                height: "500px",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
               <CardMedia
                 component="img"
                 alt={product.name}
@@ -116,17 +123,17 @@ const Product = () => {
                   width: "100%",
                   height: "auto",
                   objectFit: "contain",
-                  maxHeight: "250px",
-                  maxWidth: "250px",
+                  maxHeight: "200px",
+                  maxWidth: "200px",
                   padding: "20px",
                 }}
               />
-
               <CardContent
                 sx={{
-                  display: "flex", // Flexbox kullanarak düzenleme
-                  flexDirection: "column", // Elemanları dikey hizala
-                  gap: "10px", // Elemanlar arasına boşluk
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "10px",
+                  flexGrow: 1,
                 }}
               >
                 <Typography
@@ -139,7 +146,9 @@ const Product = () => {
                   variant="body2"
                   sx={{ fontSize: "16px", color: "gray" }}
                 >
-                  {product.description}
+                  {product.description.length > 12
+                    ? `${product.description.slice(0, 12)}...`
+                    : product.description}
                 </Typography>
                 <Typography
                   variant="body1"
@@ -147,29 +156,36 @@ const Product = () => {
                 >
                   ${product.price}
                 </Typography>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  fullWidth
-                  component={Link}
-                  to={`/products/${product._id}`}
-                  sx={{ fontSize: "12px", padding: "10px" }}
-                >
-                  View Details
-                </Button>
-                <Button
-                  variant="outlined"
-                  color="secondary"
-                  fullWidth
-                  onClick={() => handleAddToCart(product)}
+                <Box
                   sx={{
-                    fontSize: "12px",
-                    padding: "10px",
-                    borderRadius: "8px",
+                    marginTop: "auto",
                   }}
                 >
-                  Add to Cart
-                </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    component={Link}
+                    to={`/products/${product._id}`}
+                    sx={{ fontSize: "12px", padding: "10px" }}
+                  >
+                    View Details
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    fullWidth
+                    onClick={() => handleAddToCart(product)}
+                    sx={{
+                      fontSize: "12px",
+                      padding: "10px",
+                      borderRadius: "8px",
+                      marginTop: "10px",
+                    }}
+                  >
+                    Add to Cart
+                  </Button>
+                </Box>
               </CardContent>
             </Card>
           </Grid>

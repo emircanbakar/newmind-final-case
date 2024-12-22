@@ -7,17 +7,19 @@ const productRoutes = require("./routes/productRoutes");
 const config = require("./config/db");
 const paymentRoutes = require("./routes/paymentRoutes");
 const billingRoutes = require("./routes/billingRoutes");
-
 const cors = require("cors");
+
+
 app.use(
   cors({
-    origin: "http://localhost:3000", // Vite frontend'in çalıştığı port
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"], // Gerekli başlıkları ekleyebilirsiniz
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);

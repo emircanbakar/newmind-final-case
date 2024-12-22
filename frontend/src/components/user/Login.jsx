@@ -22,6 +22,8 @@ const Login = ({ onLogin }) => {
         }
       );
       onLogin(response.data.token);
+      const token = response.data.token;
+      localStorage.setItem("token", token); 
       toast.success("welcome back!");
     } catch (err) {
       setError("Invalid credentials! Please try again.");

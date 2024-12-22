@@ -35,8 +35,6 @@ const App = () => {
 
   return (
     <CartProvider>
-      {" "}
-      {/* App'i CartContext ile sarmalıyoruz */}
       <Router>
         <div>
           <header className="header">
@@ -63,7 +61,7 @@ const App = () => {
                   <Button variant="outlined" style={{ marginLeft: "10px" }}>
                     <Link to="/profile">
                       <Typography variant="body1" sx={{ fontSize: "14px" }}>
-                        Add Product
+                        Profile
                       </Typography>
                     </Link>
                   </Button>
@@ -77,7 +75,7 @@ const App = () => {
                   <Button variant="outlined" style={{ marginLeft: "10px" }}>
                     <Link to="/add-product">
                       <Typography variant="body1" sx={{ fontSize: "14px" }}>
-                        Profile
+                        Add Product
                       </Typography>
                     </Link>
                   </Button>
